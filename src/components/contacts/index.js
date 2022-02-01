@@ -26,7 +26,7 @@ const Contacts = () => {
   // }
 
   useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/users/?limit=5')
+    fetch('https://jsonplaceholder.typicode.com/users?_limit=5')
       .then((res) => res.json())
       .then((data) => setUsers(data));
   }, []);
