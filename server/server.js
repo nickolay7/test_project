@@ -1,6 +1,7 @@
 const express = require('express')
-const cors = require('cors');
-const bodyParser = require('body-parser');
+const cors = require('cors')
+const bodyParser = require('body-parser')
+const db = require('./db')
 
 const app = express();
 
@@ -14,7 +15,7 @@ app.use(
 
 app.post('/api', (req, res) => {
   const { name } = req.body;
-  res.json({ name })
+  db.includes(name) ? res.json({ name }) : res.json({ error: 'User doesn\'t exist!' })
 })
 app.listen(5000, () => {
   console.log('JSON Server is running!!!')

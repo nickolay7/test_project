@@ -1,6 +1,10 @@
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import useAppContext from "../hoc/useAppContext";
 
 const Layout = () => {
+  const { logout, user } = useAppContext();
+  const navigate = useNavigate();
+
   return (
     <>
       <header>
@@ -15,8 +19,15 @@ const Layout = () => {
                 <NavLink to="/contacts" className="nav-link mx-3">Contacts</NavLink>
               </li>
               <li className="nav-item">
-                <NavLink to="/login" className="nav-link mx-3">Login</NavLink>
+                {
+                  user
+                    ? <button className="btn btn-link text-decoration-none text-dark" onClick={
+                        () => logout(() => navigate('/', { replace: true }))}
+                      >Logout</button>
+                    : <NavLink to="/login" className="nav-link mx-3">Login</NavLink>
+                }
               </li>
+              {user && <h5 className="my-auto ms-5">{`Hello, ${user}!`}</h5>}
             </ul>
           </div>
         </nav>
