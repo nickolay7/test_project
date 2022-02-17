@@ -1,17 +1,21 @@
-import { createContext, useState } from 'react';
-import { nanoid } from 'nanoid';
+import { createContext, useState, useEffect } from 'react';
+import axios from 'axios';
 
 export const Context = createContext(null);
 
 export const AppContext = ({ children }) => {
   const [user, setUser] = useState();
-  const [contacts, setContacts] = useState([
-    { email: 'Sincere@april.biz', id: nanoid() },
-    { email: 'Julianne.OConner@kory.org', id: nanoid() },
-    { email: 'Karley_Dach@jasper.info', id: nanoid() },
-   ]);
+  const [contacts, setContacts] = useState([]);
+
+  useEffect(() => {
+    (async function () {
+      const { data } = await axios.get('https://jsonplaceholder.typicode.com/todos?_limit=10');
+      setContacts(data);
+    }());
+  }, []);
+
   const addContact = (contact, cb) => {
-    setContacts([...contacts, contact]);
+    setContacts([contact, ...contacts]);
     cb && cb();
   };
   const updateContacts = (contacts) => {

@@ -1,39 +1,30 @@
-import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import useAppContext from "../hoc/useAppContext";
+import { NavLink, Outlet } from 'react-router-dom';
 
 const Layout = () => {
-  const { logout, user } = useAppContext();
-  const navigate = useNavigate();
 
   return (
     <>
       <header>
         <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-secondary opacity-75">
-          <h3 className="navbar-brand my-auto mx-3">Test</h3>
-          <div>
+          <img className="rounded-circle mx-3" src="https://w7.pngwing.com/pngs/803/598/png-transparent-phoenix-logo-phoenix-red-bird-illustration-leaf-photography-mirror.png" width="70px" alt="pic"/>
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                  aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto">
               <li className="nav-item active">
                 <NavLink to='/' className="nav-link mx-3">Home</NavLink>
               </li>
               <li className="nav-item">
-                <NavLink to="/contacts" className="nav-link mx-3">Contacts</NavLink>
+                <NavLink to="/toDoList" className="nav-link mx-3">Todo List</NavLink>
               </li>
-              <li className="nav-item">
-                {
-                  user
-                    ? <button className="btn btn-link text-decoration-none text-dark" onClick={
-                        () => logout(() => navigate('/', { replace: true }))}
-                      >Logout</button>
-                    : <NavLink to="/login" className="nav-link mx-3">Login</NavLink>
-                }
-              </li>
-              {user && <h5 className="my-auto ms-5">{`Hello, ${user}!`}</h5>}
             </ul>
           </div>
         </nav>
       </header>
       <Outlet />
-      <footer className="fixed-bottom text-center">Nickoloz@2022</footer>
+      <footer className="fixed-bottom text-center p-3 bg-secondary">Nickoloz@2022</footer>
     </>
   );
 };

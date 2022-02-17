@@ -9,25 +9,25 @@ const EditForm = () => {
   const { id } = useParams();
   const path = state?.from?.pathname || '/';
   const { contacts } = useAppContext();
-  const contact = contacts.find((item) => item.id === id);
-  const [emailValue, setEmailValue] = useState(contact.email);
+  const contact = contacts.find((item) => item.id == id);
+  const [taskValue, setTaskValue] = useState(contact.title);
   const onEdit = (e) => {
     const currentValue = e.target.name.value;
-    setEmailValue(() => currentValue);
+    setTaskValue(() => currentValue);
   };
   const onSave = (e) => {
     e.preventDefault();
     console.log(e.target.name.value)
-    contact.email = e.target.name.value;
+    contact.title = e.target.name.value;
     navigate(path, { replace: true });
-  };
+};
 
   return (
-    <div>
+    <div className="mt-5">
       <h3 className="text-center">Edit contact</h3>
       <form method="POST" className="mx-auto w-25" onSubmit={onSave}>
         <div className="form-group row mb-3">
-          <input type="text" name="name" className="form-control" id="inputEmail3" value={ emailValue } onChange={onEdit}/>
+          <input type="text" name="name" className="form-control" value={ taskValue } onChange={onEdit}/>
         </div>
         <div className="form-group row">
           <button type="submit" className="btn btn-primary">Edit</button>

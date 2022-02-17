@@ -1,36 +1,38 @@
-import React from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useState, useRef } from 'react';
 import { nanoid } from 'nanoid';
 import useAppContext from '../hoc/useAppContext';
 
 
 const AddForm = () => {
-  const { state } = useLocation();
-  const navigate = useNavigate();
-  const path = state?.from?.pathname || '/';
+  const [task, setTask] = useState('');
   const { addContact } = useAppContext();
+  const input = useRef();
   const onAdd = (e) => {
     e.preventDefault();
-    const data = { email: e.target.name.value, id: nanoid() };
-    if (data) {
-      addContact(data, () => {
-        console.log(data)
-        navigate(path, { replace: true });
-      });
+    if (task) {
+      addContact({ title: task, id: nanoid() });
+      input.current.value = '';
     }
   };
 
+  const changeHandle = (e) => {
+    setTask(e.target.value);
+  }
+
   return (
-    <div>
-      <h3 className="text-center">Add contact</h3>
-      <form method="POST" className="mx-auto w-25" onSubmit={onAdd}>
-        <div className="form-group row mb-3">
-          <input type="email" name="name" className="form-control" id="inputEmail3" placeholder="new contact..." />
-        </div>
-        <div className="form-group row">
-          <button type="submit" className="btn btn-primary">Add</button>
-        </div>
-      </form>
+    <div className="d-flex">
+      <input
+        type="text"
+        ref={input}
+        placeholder="add task..."
+        className="form-control input-item"
+        onChange={changeHandle}
+      />
+      <button
+        className="btn btn-outline-secondary mx-1"
+        onClick={onAdd}
+      >Add
+      </button>
     </div>
   );
 }
